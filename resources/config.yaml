@@ -1,0 +1,13 @@
+log:
+  logger-name: "daily_logger"
+  filename: "logs/daily.txt"
+  hour: 2
+  minute: 30
+server:
+  host: "0.0.0.0"
+  port: 80
+  thread-num: 4
+  authorization: "TnKD1ECGgzYaqxk9ioRnuPwOyDeivM2Z"
+  document-root: "static"
+  resources: "resources"
+  refresh-time: 1000 # Ë¢ÐÂÊ±¼ä(ms)
