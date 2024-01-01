@@ -33,12 +33,15 @@ void listFiles(const std::string& path) {
 	namespace fs = std::filesystem;
 	for (const auto& entry : fs::directory_iterator(path)) {
 		if (fs::is_regular_file(entry)) {
-			std::string file_path{ common::utils::str_remove(entry.path(), global::server::g_resources + "/") };
-			auto hash{ common::utils::encrypt(file_path) };
+			std::filesystem::path file_dir{ common::utils::str_remove(entry.path(), global::server::g_resources + "/") };
+			std::filesystem::path file_path{ file_dir };
+			file_dir.remove_filename();
+			auto hash{ file_dir.string() + common::utils::encrypt(file_path)};
 
 			if (global::g_file_hash.count(hash) == 0){
 				global::g_file_hash[hash] = file_path;
-				LogSystem::logInfo(std::format("[+] {} => {}", hash, path));
+				std::string p{ global::server::g_resources / file_path };
+				LogSystem::logInfo(std::format("[+] {} => {}", global::server::g_resources + "/" + hash, p));
 			}
 
 		} else if (fs::is_directory(entry)) {
@@ -66,8 +69,9 @@ int _ { []() {
 			std::vector<std::string> keysToDelete;
 
 			for (const auto& [hash, path] : global::g_file_hash) {
-				if (not fs::exists(global::server::g_resources + "/" + path)) {
-					LogSystem::logInfo(std::format("[-] {} <= {}", hash, path));
+				std::string p{ global::server::g_resources + "/" + path };
+				if (not fs::exists(p)) {
+					LogSystem::logInfo(std::format("[-] {} <= {}", hash, p));
 					keysToDelete.push_back(hash);
 				}
 			}

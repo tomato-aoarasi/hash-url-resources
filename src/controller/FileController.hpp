@@ -15,7 +15,7 @@ namespace controller {
 	class FileController : public drogon::HttpController<FileController> {
 	public:
 		METHOD_LIST_BEGIN
-			ADD_METHOD_TO(FileController::getResource, "/resources/{hash}", drogon::Get);
+			ADD_METHOD_VIA_REGEX(FileController::getResource, "/resources/(.*)", drogon::Get);
 		METHOD_LIST_END
 		void getResource(const drogon::HttpRequestPtr& req,
 			std::function<void(const drogon::HttpResponsePtr&)>&& callback,
