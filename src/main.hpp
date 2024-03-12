@@ -56,7 +56,7 @@ int _ { []() {
 	namespace fs = std::filesystem;
 	std::jthread t([&] {
 		while (true) {
-			std::string directoryPath{ global::server::g_resources };  // 替换为实际的目录路径
+			std::string directoryPath{ global::server::g_resources };  // 鏇挎崲涓哄疄闄呯殑鐩綍璺緞
 			if (fs::exists(directoryPath) && fs::is_directory(directoryPath)) {
 				listFiles(directoryPath);
 			}
@@ -82,7 +82,7 @@ int _ { []() {
 		}
 		});
 	t.detach();
-	
+
 	return 0;
 }() };
 
