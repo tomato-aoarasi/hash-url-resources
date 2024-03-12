@@ -13,8 +13,7 @@ C++20
 - trantor
 - yaml-cpp
 - spdlog
-- Drogon
-- nlohmann_json</code></pre>
+- Drogon</code></pre>
 
 ※使用了PkgConfig
 
